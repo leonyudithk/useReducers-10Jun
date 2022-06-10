@@ -1,8 +1,18 @@
 import { Box, Button, Flex, Image, Link, Spacer, Text } from '@chakra-ui/react';
-import React from 'react';
-import { NavLink } from 'react-router-dom';
+import React, { useContext } from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { logout } from '../actions/AuthAction';
+import { AuthContext } from '../context/authContext';
 
 const NavBars = () => {
+const {dispatch} = useContext(AuthContext)
+const navigate = useNavigate()
+
+const handleLogout = () => {
+    dispatch(logout())
+    navigate('/login')
+}
+
     return (
         <div>
             <Flex
@@ -27,7 +37,10 @@ const NavBars = () => {
                     <Link as={NavLink} to="/counter" px={2}
                    style={({isActive})=> isActive ? {color: "white"} : {color: "pink"}}
                    >Counter</Link>
-                   <Button colorScheme='pink' px={2}>Logout</Button>
+                    <Link as={NavLink} to="/perfil" px={2}
+                   style={({isActive})=> isActive ? {color: "white"} : {color: "pink"}}
+                   >Perfil</Link>
+                   <Button colorScheme='pink' px={2} onClick={handleLogout}>Logout</Button>
                 </Box>
             </Flex>
         </div>
